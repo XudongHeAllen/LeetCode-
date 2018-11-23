@@ -1,0 +1,36 @@
+Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
+
+Example: 
+
+Input: s = 7, nums = [2,3,1,2,4,3]
+Output: 2
+Explanation: the subarray [4,3] has the minimal length under the problem constraint.
+Follow up:
+If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log n). 
+The idea is create a moving bar that contains cells,when the sum is not enough, make the bar larger to increase, when the sum is enough,
+make the bar smaller to find the min distance
+
+class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        if(s==0)
+            return 0;
+        if(nums.length == 0)
+            return 0;
+        if(nums == null)
+            return 0;
+        int len = nums.length;
+        int min = len + 1;
+        int left = 0;
+        int right = 0;
+        int sum = 0;
+        while(left < len){
+            while(sum < s && right < len){
+                sum += nums[right++];
+            }
+            if (sum >= s)
+                min = Math.min(min, right - left);
+            sum -= nums[left++];
+        }
+        return min == len + 1 ? 0: min;
+    }
+}
