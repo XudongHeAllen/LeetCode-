@@ -35,3 +35,47 @@ class Solution {
         return findNums;
     }
 }
+
+class Solution {
+    public boolean backspaceCompare(String S, String T) {
+        int i = S.length() -1;
+        int j = T.length() -1;
+        int skip1 = 0;
+        int skip2 = 0;
+        
+        while(i >= 0 || j >= 0){
+            while(i >= 0){
+                if(S.charAt(i) == '#'){
+                    skip1++;
+                    i--;
+                }else if(skip1 > 0){
+                    skip1--;
+                    i--;
+                }else{
+                    break;
+                }
+            }
+            
+            while(j >= 0){
+                if(T.charAt(j) == '#'){
+                    skip2++;
+                    j--;
+                }else if(skip2 > 0){
+                    skip2--;
+                    j--;
+                }else{
+                    break;
+                }
+            }
+            if((i >= 0) != (j>=0))
+                return false;
+            
+            if(i >= 0 && j >= 0 && S.charAt(i) != T.charAt(j))
+                return false;
+            
+            i--;
+            j--;
+        }
+        return true;
+    }
+}
